@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingeniero Mecatrónico | Automatización Industrial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-deep:   #1B3A5C;
+    --blue-mid:    #2C5282;
+    --blue-light:  #3A7BD5;
+    --beige:       #F0EAD6;
+    --beige-dark:  #E0D6BC;
+    --gold:        #C9A84C;
+    --gold-light:  #E2C06A;
+    --slate:       #4A5568;
+    --white:       #FAFAF7;
+    --text-dark:   #1A202C;
+    --text-mid:    #2D3748;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(27, 58, 92, 0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+    transition: padding .3s;
+  }
+
+  nav.scrolled { padding: .65rem 2rem; }
+
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: .04em;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(250,250,247,.75); text-decoration: none;
+    font-size: .85rem; font-weight: 500; letter-spacing: .06em;
+    text-transform: uppercase; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold); color: var(--blue-deep) !important;
+    padding: .45rem 1.1rem; border-radius: 4px;
+    font-weight: 600 !important; transition: background .2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--blue-deep) !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: .3s; }
+
+  @media(max-width:768px){
+    .nav-links { display:none; flex-direction:column; position:fixed; top:60px; left:0; right:0;
+      background: var(--blue-deep); padding:1.5rem 2rem; gap:1.2rem; }
+    .nav-links.open { display:flex; }
+    .hamburger { display:flex; }
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--blue-deep) 0%, #0F2540 55%, #162D4E 100%);
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    padding: 8rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+
+  /* grid lines texture */
+  #hero::before {
+    content:''; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(58,123,213,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(58,123,213,.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: .78rem; font-weight: 500; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    font-weight: 700; line-height: 1.05;
+    color: var(--white); max-width: 14ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title em { color: var(--gold); font-style: normal; }
+
+  .hero-sub {
+    font-size: clamp(.95rem, 2vw, 1.1rem);
+    color: rgba(240,234,214,.7);
+    max-width: 52ch; line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--gold); color: var(--blue-deep);
+    padding: .85rem 2rem; border-radius: 5px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: .95rem;
+    text-decoration: none; letter-spacing: .03em;
+    transition: background .2s, transform .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-secondary {
+    border: 1.5px solid rgba(201,168,76,.5); color: var(--beige);
+    padding: .85rem 2rem; border-radius: 5px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500; font-size: .95rem;
+    text-decoration: none; letter-spacing: .03em;
+    transition: border-color .2s, color .2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* oscilloscope signal */
+  #signal-canvas {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 120px; opacity: .35;
+    pointer-events: none;
+  }
+
+  /* stats strip */
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 4rem; flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem; font-weight: 700; color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label { font-size: .78rem; color: rgba(240,234,214,.55); letter-spacing: .08em; text-transform: uppercase; margin-top: .3rem; }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: .75rem; font-weight: 600; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: .75rem;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; color: var(--blue-deep);
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+  .section-desc {
+    color: var(--slate); font-size: 1rem; line-height: 1.75;
+    max-width: 60ch; margin-bottom: 3rem;
+  }
+
+  /* ── SERVICIOS ── */
+  #servicios { background: var(--beige); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--beige-dark);
+    border-radius: 10px;
+    padding: 2rem 1.75rem;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content:''; position:absolute; bottom:0; left:0; right:0;
+    height:3px; background: var(--gold); transform: scaleX(0);
+    transform-origin: left; transition: transform .3s;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,58,92,.1); border-color: var(--gold); }
+  .service-card:hover::after { transform: scaleX(1); }
+
+  .service-icon {
+    width: 48px; height: 48px; margin-bottom: 1.25rem;
+    background: rgba(27,58,92,.07); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .service-icon svg { width: 24px; height: 24px; stroke: var(--blue-deep); fill: none; stroke-width: 1.8; }
+
+  .service-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--blue-deep); margin-bottom: .6rem;
+  }
+  .service-text { font-size: .9rem; color: var(--slate); line-height: 1.65; }
+
+  /* ── SOBRE MÍ ── */
+  #sobre {
+    background: var(--white);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  @media(max-width:768px){ .about-grid { grid-template-columns: 1fr; } }
+
+  .about-photo-wrap {
+    position: relative;
+  }
+  .about-photo-wrap::before {
+    content:'';
+    position:absolute; inset:-14px -14px 14px 14px;
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    z-index: 0;
+  }
+  .about-photo {
+    width: 100%; max-width: 400px;
+    border-radius: 10px; display: block;
+    position: relative; z-index: 1;
+    filter: grayscale(15%);
+    object-fit: cover;
+  }
+
+  .about-content p {
+    color: var(--slate); font-size: .98rem; line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .skills-list {
+    display: flex; flex-wrap: wrap; gap: .6rem;
+    margin-top: 1.5rem;
+  }
+  .skill-tag {
+    background: var(--beige); border: 1px solid var(--beige-dark);
+    color: var(--blue-deep); font-size: .8rem; font-weight: 500;
+    padding: .35rem .85rem; border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: .04em;
+  }
+
+  /* ── CONTACTO ── */
+  #contacto { background: var(--beige); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  @media(max-width:768px){ .contact-grid { grid-template-columns: 1fr; } }
+
+  .contact-info-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  .contact-info-item svg {
+    width: 20px; height: 20px;
+    stroke: var(--gold); fill: none; stroke-width: 1.8;
+    flex-shrink: 0; margin-top: 3px;
+  }
+  .contact-info-item h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: .85rem; font-weight: 600;
+    color: var(--blue-deep); margin-bottom: .2rem;
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  .contact-info-item p { font-size: .9rem; color: var(--slate); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width:520px){ .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .form-group label {
+    font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--blue-deep);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: .8rem 1rem;
+    border: 1.5px solid var(--beige-dark);
+    border-radius: 6px;
+    background: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: .92rem; color: var(--text-dark);
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--blue-mid);
+    box-shadow: 0 0 0 3px rgba(44,82,130,.12);
+  }
+  .form-group textarea { resize: vertical; min-height: 130px; }
+
+  .btn-submit {
+    background: var(--blue-deep); color: var(--white);
+    padding: 1rem 2.2rem; border: none; border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem; font-weight: 600; letter-spacing: .04em;
+    cursor: pointer; transition: background .2s, transform .2s;
+    align-self: flex-start;
+  }
+  .btn-submit:hover { background: var(--blue-mid); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--blue-deep);
+    color: rgba(250,250,247,.55);
+    text-align: center;
+    padding: 2.5rem 2rem;
+    font-size: .85rem;
+    border-top: 1px solid rgba(201,168,76,.2);
+  }
+  footer strong { color: var(--gold); }
+
+  /* ── REVEAL ANIMATION ── */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+  .reveal-delay-4 { transition-delay: .4s; }
+  .reveal-delay-5 { transition-delay: .5s; }
+
+  /* ── PHOTO PLACEHOLDER ── */
+  .photo-placeholder {
+    width:100%; max-width:400px; aspect-ratio:3/4;
+    border-radius:10px; display:flex; align-items:center;
+    justify-content:center; flex-direction:column;
+    background: linear-gradient(135deg, #1B3A5C, #2C5282);
+    color: rgba(250,250,247,.5);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size:.85rem; gap:.75rem;
+    position:relative; z-index:1;
+    overflow:hidden;
+  }
+  .photo-placeholder svg { width:48px; height:48px; stroke:rgba(201,168,76,.5); fill:none; stroke-width:1.2; }
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal { opacity:1; transform:none; transition:none; }
+    #signal-canvas { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">JM<span>.</span>ING</div>
+  <button class="hamburger" aria-label="Menú" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#contacto" class="nav-cta">Contáctame</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="section-inner" style="width:100%">
+    <p class="hero-eyebrow reveal">Ingeniero Mecatrónico · Automatización Industrial</p>
+    <h1 class="hero-title reveal reveal-delay-1">
+      Soluciones que <em>mueven</em> tu industria
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      4 años conectando tecnología con resultados. Asesoría técnica en control, instrumentación, accionamientos y sistemas de automatización — con enfoque comercial que genera confianza y cierra proyectos.
+    </p>
+    <div class="hero-btns reveal reveal-delay-3">
+      <a href="#contacto" class="btn-primary">Habla conmigo</a>
+      <a href="#servicios" class="btn-secondary">Ver servicios</a>
+    </div>
+    <div class="hero-stats reveal reveal-delay-4">
+      <div class="stat">
+        <span class="stat-num">4<span>+</span></span>
+        <span class="stat-label">Años de experiencia</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="counter-projects">0<span>+</span></span>
+        <span class="stat-label">Proyectos asesorados</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">100<span>%</span></span>
+        <span class="stat-label">Orientación al cliente</span>
+      </div>
+    </div>
+  </div>
+  <canvas id="signal-canvas"></canvas>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Lo que ofrezco</p>
+    <h2 class="section-title reveal reveal-delay-1">Especialidades técnicas<br>y comerciales</h2>
+    <p class="section-desc reveal reveal-delay-2">Soluciones pensadas para optimizar tus procesos productivos, desde la selección del componente correcto hasta la implementación y seguimiento.</p>
+
+    <div class="services-grid">
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3 class="service-title">Sistemas de Control</h3>
+        <p class="service-text">Asesoría en PLCs, HMIs y sistemas SCADA. Selección, configuración y acompañamiento técnico para que tu planta opere con precisión.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 12h4l3-9 4 18 3-9h6"/></svg>
+        </div>
+        <h3 class="service-title">Instrumentación Industrial</h3>
+        <p class="service-text">Sensores, transmisores, medidores de flujo y temperatura. Te ayudo a elegir el instrumento correcto para cada variable de proceso.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        </div>
+        <h3 class="service-title">Accionamientos Eléctricos</h3>
+        <p class="service-text">Variadores de frecuencia, arrancadores suaves y servos. Optimización del consumo energético y control preciso de movimiento.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+        </div>
+        <h3 class="service-title">Automatización de Procesos</h3>
+        <p class="service-text">Diagnóstico y diseño de soluciones de automatización a medida, integrando componentes para mejorar productividad y reducir fallas.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-5">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3 class="service-title">Asesoría Comercial Técnica</h3>
+        <p class="service-text">Acompaño el proceso de compra desde la necesidad hasta la entrega: especificaciones, cotización, negociación y soporte postventa.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3 class="service-title">Optimización de Procesos</h3>
+        <p class="service-text">Identificación de cuellos de botella y oportunidades de mejora. Implementación de soluciones que reducen costos y aumentan la eficiencia.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="sobre">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-photo-wrap reveal">
+        <img
+          id="profile-photo"
+          src="/mnt/user-data/uploads/1781915690133_image.png"
+          alt="Ingeniero Mecatrónico"
+          class="about-photo"
+          onerror="this.style.display='none'; document.getElementById('photo-fallback').style.display='flex';"
+        />
+        <div id="photo-fallback" class="photo-placeholder" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Tu foto aquí</span>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <p class="section-eyebrow reveal">Sobre mí</p>
+        <h2 class="section-title reveal reveal-delay-1">Técnica que vende.<br>Relaciones que duran.</h2>
+        <p class="reveal reveal-delay-2">
+          Soy Ingeniero Mecatrónico con 4 años de experiencia en la comercialización y asesoría técnica de materiales y soluciones de automatización industrial. Mi trabajo consiste en entender los procesos productivos de mis clientes antes de proponer cualquier solución.
+        </p>
+        <p class="reveal reveal-delay-3">
+          Combino conocimiento técnico real con una orientación comercial sólida: no solo sé cómo funciona el equipo, sé cómo justificar su valor, negociar las condiciones y acompañar al cliente hasta que el proyecto esté en marcha.
+        </p>
+        <p class="reveal reveal-delay-4">
+          Disfruto entornos donde la innovación y la mejora continua son parte del día a día. Me mueve contribuir al crecimiento de las empresas con tecnología que realmente aporte eficiencia.
+        </p>
+        <div class="skills-list reveal reveal-delay-5">
+          <span class="skill-tag">PLCs & HMIs</span>
+          <span class="skill-tag">Variadores de Frecuencia</span>
+          <span class="skill-tag">Instrumentación</span>
+          <span class="skill-tag">SCADA</span>
+          <span class="skill-tag">Sensores Industriales</span>
+          <span class="skill-tag">Negociación B2B</span>
+          <span class="skill-tag">Asesoría Técnica</span>
+          <span class="skill-tag">Servosistemas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <p class="section-eyebrow reveal">Hablemos</p>
+        <h2 class="section-title reveal reveal-delay-1">¿Tienes un proyecto<br>en mente?</h2>
+        <p class="section-desc reveal reveal-delay-2" style="margin-bottom:2.5rem;">
+          Cuéntame qué necesitas. Ya sea una cotización, una consulta técnica o explorar opciones para tu planta — estoy aquí para ayudarte.
+        </p>
+
+        <div class="contact-info-item reveal reveal-delay-3">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          <div>
+            <h4>Teléfono / WhatsApp</h4>
+            <p>+51 999 999 999</p>
+          </div>
+        </div>
+        <div class="contact-info-item reveal reveal-delay-4">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div>
+            <h4>Correo electrónico</h4>
+            <p>ingeniero@tudominio.com</p>
+          </div>
+        </div>
+        <div class="contact-info-item reveal reveal-delay-5">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <div>
+            <h4>LinkedIn</h4>
+            <p>linkedin.com/in/tu-perfil</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label for="empresa">Empresa</label>
+              <input type="text" id="empresa" placeholder="Nombre de empresa">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="tu@correo.com">
+          </div>
+          <div class="form-group">
+            <label for="servicio">¿En qué puedo ayudarte?</label>
+            <select id="servicio">
+              <option value="">Selecciona un tema</option>
+              <option>Sistemas de Control (PLC/HMI)</option>
+              <option>Instrumentación Industrial</option>
+              <option>Accionamientos Eléctricos</option>
+              <option>Automatización de Procesos</option>
+              <option>Asesoría Técnica General</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" placeholder="Cuéntame sobre tu proceso o necesidad…"></textarea>
+          </div>
+          <button class="btn-submit" onclick="handleSubmit()">Enviar mensaje →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Ingeniero Mecatrónico</strong> · Automatización Industrial · Hecho con propósito técnico.</p>
+</footer>
+
+<script>
+  /* ── NAV scroll ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  function toggleMenu(){
+    document.getElementById('nav-links').classList.toggle('open');
+  }
+
+  /* ── Reveal on scroll ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => obs.observe(el));
+
+  /* ── Counter animation ── */
+  function animateCounter(el, target, duration=1500){
+    let start = 0; const step = Math.ceil(target/60);
+    const timer = setInterval(()=>{
+      start = Math.min(start+step, target);
+      el.querySelector('span') ? el.firstChild.nodeValue = start : null;
+      el.childNodes[0].nodeValue = start;
+      if(start>=target) clearInterval(timer);
+    }, duration/60);
+  }
+
+  const counterEl = document.getElementById('counter-projects');
+  let counted = false;
+  const counterObs = new IntersectionObserver((entries)=>{
+    if(entries[0].isIntersecting && !counted){
+      counted = true;
+      let n=0; const t=setInterval(()=>{
+        n=Math.min(n+2,80);
+        counterEl.childNodes[0].nodeValue=n;
+        if(n>=80) clearInterval(t);
+      },25);
+    }
+  });
+  counterObs.observe(counterEl);
+
+  /* ── Oscilloscope signal ── */
+  const canvas = document.getElementById('signal-canvas');
+  const ctx = canvas.getContext('2d');
+  let frame=0;
+
+  function resize(){
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawSignal(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // composite signal: sine + square pulses + noise
+    ctx.beginPath();
+    ctx.strokeStyle = '#C9A84C';
+    ctx.lineWidth = 1.8;
+
+    const W=canvas.width, H=canvas.height, mid=H*.55;
+    for(let x=0;x<W;x++){
+      const t = (x+frame*1.2)/W;
+      const sine  = Math.sin(t*Math.PI*6)*18;
+      const pulse = Math.sin(t*Math.PI*18)>0.6 ? 22 : 0;
+      const noise = (Math.random()-.5)*2;
+      const y = mid - sine - pulse*.4 + noise;
+      x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    // second channel, lighter
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(58,123,213,.6)';
+    ctx.lineWidth = 1.2;
+    for(let x=0;x<W;x++){
+      const t=(x+frame*.7)/W;
+      const y = mid + 22 - Math.sin(t*Math.PI*9+1)*14 - Math.cos(t*Math.PI*3)*8;
+      x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    frame++;
+    requestAnimationFrame(drawSignal);
+  }
+  drawSignal();
+
+  /* ── Form submit ── */
+  function handleSubmit(){
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = '✓ Mensaje enviado';
+    btn.style.background = '#2C5282';
+    btn.disabled = true;
+    setTimeout(()=>{ btn.textContent='Enviar mensaje →'; btn.style.background=''; btn.disabled=false; },3500);
+  }
+
+  /* ── init reveals ── */
+  document.querySelectorAll('.reveal').forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+  });
+</script>
+</body>
+</html>
